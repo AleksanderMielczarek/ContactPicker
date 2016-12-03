@@ -4,9 +4,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application>
-        <activity
-            android:name=".ui.contacts.ContactsActivity_"
-            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.contacts.ContactsActivity_" />
     </application>
 
 </manifest>
