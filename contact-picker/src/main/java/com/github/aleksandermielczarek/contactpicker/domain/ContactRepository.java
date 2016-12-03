@@ -6,7 +6,8 @@ import rx.Observable;
  * Created by Aleksander Mielczarek on 03.12.2016.
  */
 
-public interface ContactsService {
+public interface ContactRepository {
 
-    Observable<Contact> loadContacts();
+    Observable<Contact> findAll();
+
 }

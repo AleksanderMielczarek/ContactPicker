@@ -50,11 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
     @OnActivityResult(MainViewModel.REQUEST_PICK_CONTACT)
     protected void pickContact(int result,
-                               @OnActivityResult.Extra(ContactsActivity.EXTRA_CONTACT_NAME) String name,
-                               @OnActivityResult.Extra(ContactsActivity.EXTRA_CONTACT_SURNAME) String surname) {
+                               @OnActivityResult.Extra(ContactsActivity.EXTRA_CONTACT_NAME) String name) {
         if (result == RESULT_OK) {
             mainViewModel.name.set(name);
-            mainViewModel.surname.set(surname);
         }
     }
 }

@@ -12,7 +12,7 @@ import com.github.aleksandermielczarek.contactpicker.R;
 import com.github.aleksandermielczarek.contactpicker.component.DaggerActivityComponent;
 import com.github.aleksandermielczarek.contactpicker.databinding.ActivityContactsBinding;
 import com.github.aleksandermielczarek.contactpicker.domain.Contact;
-import com.github.aleksandermielczarek.napkin.module.NapkinActivityModule;
+import com.github.aleksandermielczarek.contactpicker.module.ActivityModule;
 import com.github.aleksandermielczarek.permissionsdialogs.PermissionsDialogs;
 
 import org.androidannotations.annotations.EActivity;
@@ -33,7 +33,6 @@ import permissions.dispatcher.RuntimePermissions;
 public class ContactsActivity extends AppCompatActivity implements ContactsViewModel.ContactsViewModelListener {
 
     public static final String EXTRA_CONTACT_NAME = "extraContactName";
-    public static final String EXTRA_CONTACT_SURNAME = "extraContactSurname";
 
     @Inject
     protected ContactsViewModel contactsViewModel;
@@ -45,7 +44,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
         super.onCreate(savedInstanceState);
 
         DaggerActivityComponent.builder()
-                .napkinActivityModule(new NapkinActivityModule(this))
+                .activityModule(new ActivityModule(this))
                 .build()
                 .inject(this);
 
@@ -93,7 +92,6 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     public void contactPicked(Contact contact) {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_CONTACT_NAME, contact.getName());
-        intent.putExtra(EXTRA_CONTACT_SURNAME, contact.getSurname());
         setResult(RESULT_OK, intent);
         finish();
     }

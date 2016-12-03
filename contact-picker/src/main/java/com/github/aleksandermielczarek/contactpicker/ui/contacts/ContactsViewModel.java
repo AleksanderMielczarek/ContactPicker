@@ -6,7 +6,7 @@ import android.databinding.ObservableList;
 import com.github.aleksandermielczarek.contactpicker.BR;
 import com.github.aleksandermielczarek.contactpicker.R;
 import com.github.aleksandermielczarek.contactpicker.domain.Contact;
-import com.github.aleksandermielczarek.contactpicker.domain.ContactsService;
+import com.github.aleksandermielczarek.contactpicker.domain.ContactRepository;
 
 import javax.inject.Inject;
 
@@ -23,14 +23,14 @@ public class ContactsViewModel {
     public final ObservableList<ContactViewModel> contacts = new ObservableArrayList<>();
     public final ItemView contactItemView = ItemView.of(BR.viewModel, R.layout.item_contact);
 
-    private final ContactsService contactsService;
+    private final ContactRepository contactRepository;
     private final ContactViewModelFactory contactViewModelFactory;
 
     private ContactsViewModelListener viewModelListener;
 
     @Inject
-    public ContactsViewModel(ContactsService contactsService, ContactViewModelFactory contactViewModelFactory) {
-        this.contactsService = contactsService;
+    public ContactsViewModel(ContactRepository contactRepository, ContactViewModelFactory contactViewModelFactory) {
+        this.contactRepository = contactRepository;
         this.contactViewModelFactory = contactViewModelFactory;
     }
 
@@ -43,7 +43,7 @@ public class ContactsViewModel {
     }
 
     public void loadContacts() {
-        contactsService.loadContacts()
+        contactRepository.findAll()
                 .map(contact -> contactViewModelFactory.create(contact, viewModelListener))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

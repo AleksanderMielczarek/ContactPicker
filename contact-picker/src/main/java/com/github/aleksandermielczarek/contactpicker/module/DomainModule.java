@@ -1,7 +1,7 @@
 package com.github.aleksandermielczarek.contactpicker.module;
 
-import com.github.aleksandermielczarek.contactpicker.domain.ContactsService;
-import com.github.aleksandermielczarek.contactpicker.domain.ContactsServiceImpl;
+import com.github.aleksandermielczarek.contactpicker.domain.ContactRepository;
+import com.github.aleksandermielczarek.contactpicker.domain.ContactRepositoryImpl;
 
 import dagger.Binds;
 import dagger.Module;
@@ -13,5 +13,5 @@ import dagger.Module;
 public abstract class DomainModule {
 
     @Binds
-    abstract ContactsService bindContactService(ContactsServiceImpl contactsService);
+    abstract ContactRepository bindContactRepository(ContactRepositoryImpl contactRepository);
 }

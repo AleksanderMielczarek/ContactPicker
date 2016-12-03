@@ -39,11 +39,6 @@
             android:layout_height="wrap_content"
             android:text="@{viewModel.name}" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.surname}" />
-
     </LinearLayout>
 
 </layout>

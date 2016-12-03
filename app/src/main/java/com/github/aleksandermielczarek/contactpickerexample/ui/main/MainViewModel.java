@@ -19,7 +19,6 @@ public class MainViewModel {
     public static final int REQUEST_PICK_CONTACT = 1;
 
     public final ObservableField<String> name = new ObservableField<>();
-    public final ObservableField<String> surname = new ObservableField<>();
 
     private final AppCompatActivity activity;
 
@@ -36,26 +35,23 @@ public class MainViewModel {
     public void restoreState(@Nullable State state) {
         if (state != null) {
             name.set(state.getName());
-            surname.set(state.getSurname());
         }
     }
 
     public State saveState() {
-        return new State(name.get(), surname.get());
+        return new State(name.get());
     }
 
     @Parcel
     public static final class State {
 
         String name;
-        String surname;
 
         public State() {
         }
 
-        public State(String name, String surname) {
+        public State(String name) {
             this.name = name;
-            this.surname = surname;
         }
 
         public String getName() {
@@ -66,12 +62,5 @@ public class MainViewModel {
             this.name = name;
         }
 
-        public String getSurname() {
-            return surname;
-        }
-
-        public void setSurname(String surname) {
-            this.surname = surname;
-        }
     }
 }
