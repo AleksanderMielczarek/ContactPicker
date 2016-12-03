@@ -26,4 +26,5 @@ ext {
     androidAnnotationsPermissionsDispatcherPluginVersion = '0.1.0'
     permissionsDialogsVersion = '0.1.3'
     autoFactoryVersion = '1.0-beta3'
+    parcelerVersion = '1.1.6'
 }

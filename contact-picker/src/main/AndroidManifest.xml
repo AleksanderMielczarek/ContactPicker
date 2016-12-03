@@ -1,5 +1,12 @@
-<manifest package="com.github.aleksandermielczarek.contactpicker">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.github.aleksandermielczarek.contactpicker">
 
-    <application />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application>
+        <activity
+            android:name=".ui.contacts.ContactsActivity_"
+            android:theme="@style/AppTheme" />
+    </application>
 
 </manifest>

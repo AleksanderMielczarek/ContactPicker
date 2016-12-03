@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title">Wybierz kontakt</string>
+    <string name="permission_read_contacts_rationale">Aplikacja potrzebuje pozwolenia by móc wybrać kontakt.</string>
+    <string name="permission_read_contacts_do_not_ask_again">Aplikacja potrzebuje pozwolenia by móc wybrać kontakt. Włącz tą opcję w ustawieniach aplikacji i spróbuj ponownie.</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Anuluj</string>
+</resources>
