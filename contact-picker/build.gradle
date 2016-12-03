@@ -1,0 +1,79 @@
+apply plugin: 'com.android.library'
+apply plugin: 'android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.github.AleksanderMielczarek'
+
+android {
+    compileSdkVersion sdkVersion
+    buildToolsVersion buildToolsVersionVersion
+
+    defaultConfig {
+        minSdkVersion minSdkVersionVersion
+        targetSdkVersion sdkVersion
+        versionCode versionMajor * 1000000 + versionMinor * 10000 + versionFix * 100
+        versionName "$versionMajor.$versionMinor.$versionFix"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    dataBinding {
+        enabled = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    //test
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$espressoCoreVersion", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile "junit:junit:$junitVersion"
+
+    //support library
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+    compile "com.android.support:design:$supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
+
+    //dagger
+    compile "com.google.dagger:dagger:$daggerVersion"
+    apt "com.google.dagger:dagger-compiler:$daggerVersion"
+    compile "com.github.AleksanderMielczarek.Napkin:module:$napkinVersion"
+
+    //rxjava
+    compile "io.reactivex:rxandroid:$rxandroidVersion"
+    compile "io.reactivex:rxjava:$rxjavaVersion"
+
+    //android utils
+    compile "com.github.hotchemi:permissionsdispatcher:$permissionsdispatcherVersion"
+    apt "com.github.hotchemi:permissionsdispatcher-processor:$permissionsdispatcherVersion"
+    compile "me.tatarka.bindingcollectionadapter:bindingcollectionadapter:$bindingcollectionaderVersion"
+    compile "me.tatarka.bindingcollectionadapter:bindingcollectionadapter-recyclerview:$bindingcollectionaderVersion"
+    apt "org.androidannotations:androidannotations:$androidannotationsVersion"
+    compile "org.androidannotations:androidannotations-api:$androidannotationsVersion"
+    apt "com.github.AleksanderMielczarek:AndroidAnnotationsPermissionsDispatcherPlugin:$androidAnnotationsPermissionsDispatcherPluginVersion"
+    compile "com.github.AleksanderMielczarek:PermissionsDialogs:$permissionsDialogsVersion"
+
+    //other utils
+    provided "com.google.auto.factory:auto-factory:$autoFactoryVersion"
+    apt "com.google.auto.factory:auto-factory:$autoFactoryVersion"
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
+        resourcePackageName android.defaultConfig.applicationId
+    }
+}
