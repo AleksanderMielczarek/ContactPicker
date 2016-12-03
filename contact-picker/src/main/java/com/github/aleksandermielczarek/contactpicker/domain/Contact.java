@@ -1,5 +1,7 @@
 package com.github.aleksandermielczarek.contactpicker.domain;
 
+import android.os.Parcelable;
+
 import org.parceler.Parcel;
 
 /**

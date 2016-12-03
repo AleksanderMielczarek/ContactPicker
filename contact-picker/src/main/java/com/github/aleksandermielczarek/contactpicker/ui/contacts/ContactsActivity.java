@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,9 @@ import com.github.aleksandermielczarek.contactpicker.module.ActivityModule;
 import com.github.aleksandermielczarek.permissionsdialogs.PermissionsDialogs;
 
 import org.androidannotations.annotations.EActivity;
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -32,7 +36,7 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class ContactsActivity extends AppCompatActivity implements ContactsViewModel.ContactsViewModelListener {
 
-    public static final String EXTRA_CONTACT_NAME = "extraContactName";
+    public static final String EXTRA_CONTACTS = "extraContacts";
 
     @Inject
     protected ContactsViewModel contactsViewModel;
@@ -91,7 +95,10 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     @Override
     public void contactPicked(Contact contact) {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_CONTACT_NAME, contact.getName());
+        ArrayList<Parcelable> contacts = new ArrayList<>();
+        Parcelable parcelableContact = Parcels.wrap(contact);
+        contacts.add(parcelableContact);
+        intent.putParcelableArrayListExtra(EXTRA_CONTACTS, contacts);
         setResult(RESULT_OK, intent);
         finish();
     }
