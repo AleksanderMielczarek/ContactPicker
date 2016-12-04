@@ -37,7 +37,7 @@
             app:itemView="@{viewModel.contactItemView}"
             app:items="@{viewModel.contacts}"
             app:layoutManager="@{LayoutManagers.linear()}"
-            tools:listitem="@layout/item_contact" />
+            tools:listitem="@layout/item_contact_photo" />
 
     </LinearLayout>
 

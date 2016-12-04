@@ -55,4 +55,12 @@ public class TextViewBindingAdapter {
         }
     }
 
+    @BindingAdapter("contactCounter")
+    public static void setContactCounter(TextView textView, Number counter) {
+        if (counter != null && counter.intValue() > 0) {
+            String counterText = String.valueOf(counter);
+            textView.setText(counterText);
+        }
+    }
+
 }

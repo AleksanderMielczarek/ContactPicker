@@ -6,6 +6,9 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Anuluj</string>
 
+    <string name="menu_select_all">Wybierz wszystkie</string>
+    <string name="menu_choose">Wybierz</string>
+
     <string name="type_assistant">ASYSTENT</string>
     <string name="type_callback">ODDZWONIENIE</string>
     <string name="type_car">SAMOCHÓD</string>

@@ -14,13 +14,16 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:background="?attr/selectableItemBackground"
-        android:onClick="@{() -> viewModel.pickContact()}">
+        android:background="@drawable/background_item_contact"
+        android:clickable="true"
+        android:onClick="@{() -> viewModel.pickContact()}"
+        android:onLongClick="@{() -> viewModel.pickMultipleContacts()}"
+        android:selected="@{viewModel.selected}">
 
         <LinearLayout
-            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical"
             android:paddingEnd="16dp"
             android:paddingLeft="72dp"

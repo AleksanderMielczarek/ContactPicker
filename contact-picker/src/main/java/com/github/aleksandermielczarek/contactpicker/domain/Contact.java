@@ -85,4 +85,30 @@ public class Contact {
         this.primaryNumber = primaryNumber;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contact contact = (Contact) o;
+
+        if (id != contact.id) return false;
+        if (phoneType != contact.phoneType) return false;
+        if (!lookupKey.equals(contact.lookupKey)) return false;
+        if (!name.equals(contact.name)) return false;
+        if (!number.equals(contact.number)) return false;
+        return photo != null ? photo.equals(contact.photo) : contact.photo == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + lookupKey.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + number.hashCode();
+        result = 31 * result + (photo != null ? photo.hashCode() : 0);
+        result = 31 * result + phoneType;
+        return result;
+    }
 }

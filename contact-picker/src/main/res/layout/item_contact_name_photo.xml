@@ -14,10 +14,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:background="?attr/selectableItemBackground"
+        android:background="@drawable/background_item_contact"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:onClick="@{() -> viewModel.pickContact()}"
-        android:orientation="horizontal">
+        android:onLongClick="@{() -> viewModel.pickMultipleContacts()}"
+        android:orientation="horizontal"
+        android:selected="@{viewModel.selected}">
 
         <ImageView
             android:layout_width="40dp"
