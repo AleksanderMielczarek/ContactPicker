@@ -27,4 +27,7 @@ ext {
     permissionsDialogsVersion = '0.1.3'
     autoFactoryVersion = '1.0-beta3'
     parcelerVersion = '1.1.6'
+    glideVersion = '3.7.0'
+    circleimageviewVersion = '2.1.0'
+    textdrawableVersion = '1.0.1'
 }

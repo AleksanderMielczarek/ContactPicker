@@ -4,4 +4,27 @@
     <string name="permission_read_contacts_do_not_ask_again">In order to pick a contact, application needs permission. Please turn on this option in application settings and than try again.</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
+
+    <string name="type_assistant">ASSISTANT</string>
+    <string name="type_callback">CALLBACK</string>
+    <string name="type_car">CAR</string>
+    <string name="type_company_main">COMPANY MAIN</string>
+    <string name="type_fax_home">FAX HOME</string>
+    <string name="type_fax_work">FAX WORK</string>
+    <string name="type_home">HOME</string>
+    <string name="type_isdn">ISDN</string>
+    <string name="type_main">MAIN</string>
+    <string name="type_mms">MMS</string>
+    <string name="type_mobile">MOBILE</string>
+    <string name="type_other">OTHER</string>
+    <string name="type_other_fax">OTHER FAX</string>
+    <string name="type_pager">PAGER</string>
+    <string name="type_radio">RADIO</string>
+    <string name="type_telex">TELEX</string>
+    <string name="type_tty_tdd">TTY TDD</string>
+    <string name="type_work">WORK</string>
+    <string name="type_work_mobile">WORK MOBILE</string>
+    <string name="type_work_pager">WORK PAGER</string>
+
+    <string name="contact_type_and_number" translatable="false">%s %s</string>
 </resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.github.aleksandermielczarek.contactpicker.ui.contacts.ContactViewModel" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{() -> viewModel.pickContact()}">
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="16dp"
+            android:paddingLeft="72dp"
+            android:paddingRight="16dp"
+            android:paddingStart="72dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="@{viewModel.contact.name}"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="16sp"
+                tools:text="Jan Kowalski" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textColor="?android:textColorSecondary"
+                android:textSize="14sp"
+                app:contactPhoneTypeAndNumber="@{viewModel.contact}"
+                tools:text="PHONE 123 123 123" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>

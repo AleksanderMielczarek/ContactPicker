@@ -1,7 +1,5 @@
 package com.github.aleksandermielczarek.contactpicker.domain;
 
-import android.os.Parcelable;
-
 import org.parceler.Parcel;
 
 /**
@@ -15,20 +13,20 @@ public class Contact {
     private String name;
     private String number;
     private String photo;
-    private int numberType;
+    private int phoneType;
     private boolean primaryNumber;
 
     public Contact() {
 
     }
 
-    public Contact(long id, String lookupKey, String name, String number, String photo, int numberType) {
+    public Contact(long id, String lookupKey, String name, String number, String photo, int phoneType) {
         this.id = id;
         this.lookupKey = lookupKey;
         this.name = name;
         this.number = number;
         this.photo = photo;
-        this.numberType = numberType;
+        this.phoneType = phoneType;
     }
 
     public long getId() {
@@ -71,12 +69,12 @@ public class Contact {
         this.photo = photo;
     }
 
-    public int getNumberType() {
-        return numberType;
+    public int getPhoneType() {
+        return phoneType;
     }
 
-    public void setNumberType(int numberType) {
-        this.numberType = numberType;
+    public void setPhoneType(int phoneType) {
+        this.phoneType = phoneType;
     }
 
     public boolean isPrimaryNumber() {
@@ -86,4 +84,5 @@ public class Contact {
     public void setPrimaryNumber(boolean primaryNumber) {
         this.primaryNumber = primaryNumber;
     }
+
 }

@@ -32,7 +32,7 @@ public class ContactRepositoryImpl implements ContactRepository {
         contact.setId(id);
         contact.setName(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)));
         contact.setNumber(phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-        contact.setNumberType(phoneCursor.getInt(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)));
+        contact.setPhoneType(phoneCursor.getInt(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)));
         contact.setPhoto(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI)));
         contact.setPrimaryNumber(primaryNumber);
         return contact;

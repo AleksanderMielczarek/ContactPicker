@@ -5,4 +5,25 @@
     <string name="permission_read_contacts_do_not_ask_again">Aplikacja potrzebuje pozwolenia by móc wybrać kontakt. Włącz tą opcję w ustawieniach aplikacji i spróbuj ponownie.</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Anuluj</string>
+
+    <string name="type_assistant">ASYSTENT</string>
+    <string name="type_callback">ODDZWONIENIE</string>
+    <string name="type_car">SAMOCHÓD</string>
+    <string name="type_company_main">FRIRMA GŁÓWNY</string>
+    <string name="type_fax_home">DOM FAX</string>
+    <string name="type_fax_work">PRACA FAX</string>
+    <string name="type_home">DOM</string>
+    <string name="type_isdn">ISDN</string>
+    <string name="type_main">GŁÓWNY</string>
+    <string name="type_mms">MMS</string>
+    <string name="type_mobile">KOMÓRKA</string>
+    <string name="type_other">INNY</string>
+    <string name="type_other_fax">INNY FAX</string>
+    <string name="type_pager">PAGER</string>
+    <string name="type_radio">RADIO</string>
+    <string name="type_telex">TELEX</string>
+    <string name="type_tty_tdd">TTY TDD</string>
+    <string name="type_work">PRACA</string>
+    <string name="type_work_mobile">PRACA KOMÓRKA</string>
+    <string name="type_work_pager">PRACA PAGER</string>
 </resources>

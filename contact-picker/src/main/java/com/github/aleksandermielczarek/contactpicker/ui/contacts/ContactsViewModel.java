@@ -2,6 +2,7 @@ package com.github.aleksandermielczarek.contactpicker.ui.contacts;
 
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
+import android.text.TextUtils;
 
 import com.github.aleksandermielczarek.contactpicker.BR;
 import com.github.aleksandermielczarek.contactpicker.R;
@@ -10,7 +11,9 @@ import com.github.aleksandermielczarek.contactpicker.domain.ContactRepository;
 
 import javax.inject.Inject;
 
+import me.tatarka.bindingcollectionadapter.BaseItemViewSelector;
 import me.tatarka.bindingcollectionadapter.ItemView;
+import me.tatarka.bindingcollectionadapter.ItemViewSelector;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -21,7 +24,20 @@ import rx.schedulers.Schedulers;
 public class ContactsViewModel {
 
     public final ObservableList<ContactViewModel> contacts = new ObservableArrayList<>();
-    public final ItemView contactItemView = ItemView.of(BR.viewModel, R.layout.item_contact);
+    public final ItemViewSelector<ContactViewModel> contactItemView = new BaseItemViewSelector<ContactViewModel>() {
+
+        @Override
+        public void select(ItemView itemView, int position, ContactViewModel item) {
+            itemView.setBindingVariable(BR.viewModel);
+            if (!item.contact.get().isPrimaryNumber()) {
+                itemView.setLayoutRes(R.layout.item_contact_no_photo);
+            } else if (TextUtils.isEmpty(item.contact.get().getPhoto())) {
+                itemView.setLayoutRes(R.layout.item_contact_name_photo);
+            } else {
+                itemView.setLayoutRes(R.layout.item_contact_photo);
+            }
+        }
+    };
 
     private final ContactRepository contactRepository;
     private final ContactViewModelFactory contactViewModelFactory;
