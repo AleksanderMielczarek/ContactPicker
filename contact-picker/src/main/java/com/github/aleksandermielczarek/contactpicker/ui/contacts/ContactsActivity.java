@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.SearchView;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -182,11 +181,6 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
         if (multipleChoiceActionMode != null) {
             multipleChoiceActionMode.finish();
         }
-    }
-
-    @Override
-    public void dispatchUpdates(DiffUtil.DiffResult diffResult) {
-        diffResult.dispatchUpdatesTo(binding.contactsRecycler.getAdapter());
     }
 
 }

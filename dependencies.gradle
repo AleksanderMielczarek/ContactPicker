@@ -21,7 +21,7 @@ ext {
     rxandroidVersion = '1.2.1'
     rxjavaVersion = '1.2.3'
     permissionsdispatcherVersion = '2.2.0'
-    bindingcollectionaderVersion = '1.3.0'
+    bindingcollectionaderVersion = '2.0.0-beta2'
     androidannotationsVersion = '4.1.0'
     androidAnnotationsPermissionsDispatcherPluginVersion = '0.1.0'
     permissionsDialogsVersion = '0.1.3'
