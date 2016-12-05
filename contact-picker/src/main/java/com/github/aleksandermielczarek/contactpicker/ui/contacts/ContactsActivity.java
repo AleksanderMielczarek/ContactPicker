@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.util.DiffUtil;
+import android.support.v7.widget.SearchView;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +23,7 @@ import com.github.aleksandermielczarek.contactpicker.databinding.MenuChosenCount
 import com.github.aleksandermielczarek.contactpicker.domain.Contact;
 import com.github.aleksandermielczarek.contactpicker.module.ActivityModule;
 import com.github.aleksandermielczarek.permissionsdialogs.PermissionsDialogs;
+import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
 
 import org.androidannotations.annotations.EActivity;
 import org.parceler.Parcels;
@@ -68,9 +72,25 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.menu_action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        contactsViewModel.filterContacts(RxSearchView.queryTextChanges(searchView));
+        return true;
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         contactsViewModel.askForContactsPermissions();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        contactsViewModel.unsubscribe();
     }
 
     @Override
@@ -162,6 +182,11 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
         if (multipleChoiceActionMode != null) {
             multipleChoiceActionMode.finish();
         }
+    }
+
+    @Override
+    public void dispatchUpdates(DiffUtil.DiffResult diffResult) {
+        diffResult.dispatchUpdatesTo(binding.contactsRecycler.getAdapter());
     }
 
 }

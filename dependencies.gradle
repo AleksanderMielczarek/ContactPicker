@@ -30,4 +30,5 @@ ext {
     glideVersion = '3.7.0'
     circleimageviewVersion = '2.1.0'
     textdrawableVersion = '1.0.1'
+    rxbindingVersion = '0.4.0'
 }

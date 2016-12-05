@@ -55,6 +55,7 @@ dependencies {
     //rxjava
     compile "io.reactivex:rxandroid:$rxandroidVersion"
     compile "io.reactivex:rxjava:$rxjavaVersion"
+    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rxbindingVersion"
 
     //android utils
     compile "com.github.hotchemi:permissionsdispatcher:$permissionsdispatcherVersion"

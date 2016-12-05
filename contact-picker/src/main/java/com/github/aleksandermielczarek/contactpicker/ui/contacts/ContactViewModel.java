@@ -51,4 +51,19 @@ public class ContactViewModel {
         }
         return false;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactViewModel that = (ContactViewModel) o;
+
+        return contact.get().equals(that.contact.get());
+    }
+
+    @Override
+    public int hashCode() {
+        return contact.get().hashCode();
+    }
 }
