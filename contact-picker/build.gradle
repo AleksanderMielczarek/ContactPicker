@@ -71,10 +71,6 @@ dependencies {
     compile "com.github.bumptech.glide:glide:$glideVersion"
     compile "de.hdodenhof:circleimageview:$circleimageviewVersion"
     compile "com.amulyakhare:com.amulyakhare.textdrawable:$textdrawableVersion"
-
-    //other utils
-    provided "com.google.auto.factory:auto-factory:$autoFactoryVersion"
-    apt "com.google.auto.factory:auto-factory:$autoFactoryVersion"
 }
 
 apt {

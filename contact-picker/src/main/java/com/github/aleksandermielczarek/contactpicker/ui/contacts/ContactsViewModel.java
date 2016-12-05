@@ -56,16 +56,14 @@ public class ContactsViewModel {
 
     private final List<ContactViewModel> allContacts = new ArrayList<>();
     private final ContactRepository contactRepository;
-    private final ContactViewModelFactory contactViewModelFactory;
     private final AppCompatActivity activity;
     private final CompositeSubscription subscriptions = new CompositeSubscription();
 
     private ContactsViewModelListener viewModelListener;
 
     @Inject
-    public ContactsViewModel(ContactRepository contactRepository, ContactViewModelFactory contactViewModelFactory, AppCompatActivity activity) {
+    public ContactsViewModel(ContactRepository contactRepository, AppCompatActivity activity) {
         this.contactRepository = contactRepository;
-        this.contactViewModelFactory = contactViewModelFactory;
         this.activity = activity;
     }
 
@@ -75,7 +73,7 @@ public class ContactsViewModel {
 
     public void loadContacts() {
         subscriptions.add(contactRepository.findAll()
-                .map(contact -> contactViewModelFactory.create(this, contact))
+                .map(contact -> new ContactViewModel(this, contact))
                 .toList()
                 .doOnNext(allContacts::addAll)
                 .map(contacts::calculateDiff)
