@@ -20,7 +20,7 @@ ext {
     napkinVersion = '0.6.1'
     rxandroidVersion = '1.2.1'
     rxjavaVersion = '1.2.3'
-    permissionsdispatcherVersion = '2.2.0'
+    permissionsdispatcherVersion = '2.2.1'
     bindingcollectionaderVersion = '2.0.0-beta2'
     androidannotationsVersion = '4.1.0'
     androidAnnotationsPermissionsDispatcherPluginVersion = '0.1.0'
@@ -29,5 +29,5 @@ ext {
     glideVersion = '3.7.0'
     circleimageviewVersion = '2.1.0'
     textdrawableVersion = '1.0.1'
-    rxbindingVersion = '0.4.0'
+    rxbindingVersion = '1.0.0'
 }
