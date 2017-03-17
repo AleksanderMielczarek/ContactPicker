@@ -14,6 +14,7 @@ import com.github.aleksandermielczarek.contactpicker.domain.Contact;
 import com.github.aleksandermielczarek.contactpicker.domain.ContactRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
 import collections.DiffObservableList;
 import me.tatarka.bindingcollectionadapter.OnItemBind;
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -59,6 +61,7 @@ public class ContactsViewModel {
     private final AppCompatActivity activity;
     private final CompositeSubscription subscriptions = new CompositeSubscription();
 
+    private Subscription searchSubscription;
     private ContactsViewModelListener viewModelListener;
 
     @Inject
@@ -83,33 +86,47 @@ public class ContactsViewModel {
     }
 
     public void sendChosenContacts() {
-        Observable.from(contacts)
-                .filter(contactViewModel -> contactViewModel.chosen.get())
+        subscriptions.add(Observable.from(contacts)
+                .filter(contactViewModel -> contactViewModel.selected.get())
                 .map(contactViewModel -> contactViewModel.contact.get())
                 .toList()
-                .subscribe(chosenContacts -> {
-                    Intent intent = viewModelListener.prepareIntent(chosenContacts);
-                    activity.setResult(Activity.RESULT_OK, intent);
-                    activity.finish();
-                });
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::sendContacts));
+    }
+
+    public void sendContacts(List<Contact> contacts) {
+        Intent intent = viewModelListener.prepareIntent(contacts);
+        activity.setResult(Activity.RESULT_OK, intent);
+        activity.finish();
+    }
+
+    public void sendContact(Contact contact) {
+        sendContacts(Collections.singletonList(contact));
     }
 
     public void chooseAllContacts() {
-        Observable.from(contacts)
-                .filter(contactViewModel -> !contactViewModel.chosen.get())
-                .forEach(ContactViewModel::pickContact);
+        subscriptions.add(Observable.from(contacts)
+                .filter(contactViewModel -> !contactViewModel.selected.get())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(ContactViewModel::pickContact));
     }
 
     public void deselectAllContacts() {
-        Observable.from(contacts).forEach(contactViewModel -> {
-            contactViewModel.chosen.set(false);
-            contactViewModel.selected.set(false);
-        });
-        numberOfChosenContacts.set(0);
+        subscriptions.add(Observable.from(contacts)
+                .filter(contactViewModel -> contactViewModel.selected.get())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(contactViewModel -> contactViewModel.selected.set(false),
+                        throwable -> {
+                            //do nothing
+                        },
+                        () -> numberOfChosenContacts.set(0)));
     }
 
     public void filterContacts(Observable<CharSequence> contactQuery) {
-        subscriptions.add(contactQuery
+        searchSubscription = contactQuery
                 .observeOn(Schedulers.newThread())
                 .map(CharSequence::toString)
                 .map(String::toLowerCase)
@@ -121,7 +138,26 @@ public class ContactsViewModel {
                     return Pair.create(newContacts, diffResult);
                 })
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(listDiffResultPair -> contacts.update(listDiffResultPair.first, listDiffResultPair.second));
+    }
+
+    public void restoreContacts() {
+        subscriptions.add(Observable.just(allContacts)
+                .map(newContacts -> {
+                    DiffUtil.DiffResult diffResult = contacts.calculateDiff(newContacts);
+                    return Pair.create(newContacts, diffResult);
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(listDiffResultPair -> contacts.update(listDiffResultPair.first, listDiffResultPair.second)));
+    }
+
+    public void enableSearchMode() {
+        viewModelListener.enableSearchMode();
+    }
+
+    public void unubscribeSearch() {
+        searchSubscription.unsubscribe();
     }
 
     public void unsubscribe() {
@@ -142,11 +178,16 @@ public class ContactsViewModel {
 
         Intent prepareIntent(List<Contact> contacts);
 
-        boolean multipleChoiceEnabled();
+        boolean multipleChoiceModeEnabled();
 
-        void enableMultipleChoice();
+        void enableMultipleChoiceMode();
 
-        void disableMultipleChoice();
+        void disableMultipleChoiceMode();
 
+        boolean searchModeEnabled();
+
+        void enableSearchMode();
+
+        void disableSearchMode();
     }
 }

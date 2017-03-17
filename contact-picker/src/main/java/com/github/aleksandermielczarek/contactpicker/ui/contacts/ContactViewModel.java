@@ -11,40 +11,38 @@ import com.github.aleksandermielczarek.contactpicker.domain.Contact;
 public class ContactViewModel {
 
     public final ObservableField<Contact> contact = new ObservableField<>();
-    public final ObservableBoolean chosen = new ObservableBoolean(false);
     public final ObservableBoolean selected = new ObservableBoolean(false);
 
     private final ContactsViewModel contactsViewModel;
+    private final ContactsViewModel.ContactsViewModelListener contactsViewModelListener;
 
     public ContactViewModel(ContactsViewModel contactsViewModel, Contact contact) {
         this.contactsViewModel = contactsViewModel;
         this.contact.set(contact);
+        contactsViewModelListener = contactsViewModel.getViewModelListener();
     }
 
     public void pickContact() {
-        if (contactsViewModel.getViewModelListener().multipleChoiceEnabled()) {
-            selected.set(!selected.get());
-            if (chosen.get()) {
+        if (contactsViewModelListener.multipleChoiceModeEnabled()) {
+            if (selected.get()) {
                 contactsViewModel.numberOfChosenContacts.set(contactsViewModel.numberOfChosenContacts.get() - 1);
                 if (contactsViewModel.numberOfChosenContacts.get() == 0) {
-                    contactsViewModel.getViewModelListener().disableMultipleChoice();
+                    contactsViewModel.getViewModelListener().disableMultipleChoiceMode();
                 }
             } else {
                 contactsViewModel.numberOfChosenContacts.set(contactsViewModel.numberOfChosenContacts.get() + 1);
             }
-            chosen.set(!chosen.get());
+            selected.set(!selected.get());
         } else {
-            chosen.set(true);
-            contactsViewModel.sendChosenContacts();
+            contactsViewModel.sendContact(contact.get());
         }
     }
 
     public boolean pickMultipleContacts() {
-        if (!contactsViewModel.getViewModelListener().multipleChoiceEnabled()) {
-            chosen.set(true);
+        if (!contactsViewModelListener.multipleChoiceModeEnabled()) {
             selected.set(true);
             contactsViewModel.numberOfChosenContacts.set(contactsViewModel.numberOfChosenContacts.get() + 1);
-            contactsViewModel.getViewModelListener().enableMultipleChoice();
+           contactsViewModelListener.enableMultipleChoiceMode();
             return true;
         }
         return false;

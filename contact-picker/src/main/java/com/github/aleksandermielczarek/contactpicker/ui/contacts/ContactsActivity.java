@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import com.github.aleksandermielczarek.contactpicker.R;
 import com.github.aleksandermielczarek.contactpicker.component.DaggerActivityComponent;
 import com.github.aleksandermielczarek.contactpicker.databinding.ActivityContactsBinding;
-import com.github.aleksandermielczarek.contactpicker.databinding.MenuChosenCounterBinding;
+import com.github.aleksandermielczarek.contactpicker.databinding.MenuActionChosenCounterBinding;
 import com.github.aleksandermielczarek.contactpicker.domain.Contact;
 import com.github.aleksandermielczarek.contactpicker.module.ActivityModule;
 import com.github.aleksandermielczarek.permissionsdialogs.PermissionsDialogs;
@@ -52,8 +52,10 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     protected ContactsViewModel contactsViewModel;
 
     private ActivityContactsBinding binding;
-    private boolean multipleChoiceEnabled = false;
+    private boolean multipleChoiceModeEnabled = false;
     private ActionMode multipleChoiceActionMode;
+    private boolean searchModeEnabled = false;
+    private android.support.v7.view.ActionMode searchActionMode;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,10 +75,11 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
-
         MenuItem searchItem = menu.findItem(R.id.menu_action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        contactsViewModel.filterContacts(RxSearchView.queryTextChanges(searchView));
+        searchItem.setOnMenuItemClickListener(menuItem -> {
+            contactsViewModel.enableSearchMode();
+            return true;
+        });
         return true;
     }
 
@@ -130,21 +133,21 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     }
 
     @Override
-    public boolean multipleChoiceEnabled() {
-        return multipleChoiceEnabled;
+    public boolean multipleChoiceModeEnabled() {
+        return multipleChoiceModeEnabled;
     }
 
     @Override
-    public void enableMultipleChoice() {
+    public void enableMultipleChoiceMode() {
         startActionMode(new ActionMode.Callback() {
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                MenuChosenCounterBinding counterBinding = MenuChosenCounterBinding.inflate(getLayoutInflater());
+                MenuActionChosenCounterBinding counterBinding = MenuActionChosenCounterBinding.inflate(getLayoutInflater());
                 counterBinding.setViewModel(contactsViewModel);
                 actionMode.setCustomView(counterBinding.getRoot());
                 MenuInflater menuInflater = getMenuInflater();
-                menuInflater.inflate(R.menu.menu_select_multiple, menu);
-                multipleChoiceEnabled = true;
+                menuInflater.inflate(R.menu.menu_action_select_multiple, menu);
+                multipleChoiceModeEnabled = true;
                 multipleChoiceActionMode = actionMode;
                 return true;
             }
@@ -170,16 +173,103 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
             @Override
             public void onDestroyActionMode(ActionMode actionMode) {
                 contactsViewModel.deselectAllContacts();
-                multipleChoiceEnabled = false;
+                multipleChoiceModeEnabled = false;
                 multipleChoiceActionMode = null;
             }
         });
     }
 
     @Override
-    public void disableMultipleChoice() {
+    public void disableMultipleChoiceMode() {
         if (multipleChoiceActionMode != null) {
             multipleChoiceActionMode.finish();
+        }
+    }
+
+    @Override
+    public boolean searchModeEnabled() {
+        return searchModeEnabled;
+    }
+
+    @Override
+    public void enableSearchMode() {
+        startSupportActionMode(new android.support.v7.view.ActionMode.Callback() {
+
+            @Override
+            public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+                MenuInflater menuInflater = getMenuInflater();
+                menuInflater.inflate(R.menu.menu_action_search, menu);
+                searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.menu_action_search));
+                searchView.setIconifiedByDefault(false);
+                contactsViewModel.filterContacts(RxSearchView.queryTextChanges(searchView));
+                searchModeEnabled = true;
+                searchActionMode = mode;
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+                searchView.requestFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item) {
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(android.support.v7.view.ActionMode mode) {
+                contactsViewModel.unubscribeSearch();
+                contactsViewModel.restoreContacts();
+                searchModeEnabled = false;
+                searchActionMode = null;
+            }
+
+            private SearchView searchView;
+
+           /* @Override
+            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+                MenuInflater menuInflater = getMenuInflater();
+                menuInflater.inflate(R.menu.menu_action_search, menu);
+                searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.menu_action_search));
+                searchView.setIconifiedByDefault(false);
+                contactsViewModel.filterContacts(RxSearchView.queryTextChanges(searchView));
+                searchModeEnabled = true;
+                searchActionMode = actionMode;
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+                searchView.requestFocus();
+               *//* searchBinding.searchContacts.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput();
+                showSoftInput(searchBinding.searchContacts, InputMethodManager.SHOW_IMPLICIT);
+                return true;*//*
+                return true;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode actionMode) {
+                contactsViewModel.unubscribeSearch();
+                contactsViewModel.restoreContacts();
+                searchModeEnabled = false;
+                searchActionMode = null;
+            }*/
+        });
+    }
+
+    @Override
+    public void disableSearchMode() {
+        if (searchActionMode != null) {
+            searchActionMode.finish();
         }
     }
 
