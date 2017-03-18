@@ -10,7 +10,6 @@ buildscript {
     dependencies {
         classpath "com.github.dcendents:android-maven-gradle-plugin:${androidMavenGradlePluginVersion}"
         classpath "com.android.tools.build:gradle:$toolsBuildGradleVersion"
-        classpath "com.neenbedankt.gradle.plugins:android-apt:$androidAptVersion"
         classpath "me.tatarka:gradle-retrolambda:$gradleRetrolambdaVersion"
         classpath "com.github.ben-manes:gradle-versions-plugin:$gradleVersionsPluginVersion"
 
@@ -24,6 +23,7 @@ allprojects {
         jcenter()
         maven { url "https://jitpack.io" }
         maven { url 'http://dl.bintray.com/amulyakhare/maven' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
 }
 

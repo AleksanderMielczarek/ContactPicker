@@ -12,7 +12,7 @@ import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by Aleksander Mielczarek on 03.12.2016.
@@ -88,7 +88,7 @@ public class ContactRepositoryImpl implements ContactRepository {
                     }
                 }
             }
-        }).flatMap(Observable::from);
+        }).flatMap(Observable::fromIterable);
     }
 
 }

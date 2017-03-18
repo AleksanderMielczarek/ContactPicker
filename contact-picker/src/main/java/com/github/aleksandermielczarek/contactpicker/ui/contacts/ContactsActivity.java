@@ -22,7 +22,7 @@ import com.github.aleksandermielczarek.contactpicker.databinding.MenuActionChose
 import com.github.aleksandermielczarek.contactpicker.domain.Contact;
 import com.github.aleksandermielczarek.contactpicker.module.ActivityModule;
 import com.github.aleksandermielczarek.permissionsdialogs.PermissionsDialogs;
-import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
+import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView;
 
 import org.androidannotations.annotations.EActivity;
 import org.parceler.Parcels;
@@ -32,12 +32,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
-import rx.Observable;
 
 /**
  * Created by Aleksander Mielczarek on 03.12.2016.
@@ -92,7 +92,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        contactsViewModel.unsubscribe();
+        contactsViewModel.dispose();
     }
 
     @Override
@@ -125,7 +125,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     public Intent prepareIntent(List<Contact> contacts) {
         Intent intent = new Intent();
         ArrayList<Parcelable> parcelableContacts = new ArrayList<>(contacts.size());
-        Observable.from(contacts)
+        Observable.fromIterable(contacts)
                 .map(Parcels::wrap)
                 .forEach(parcelableContacts::add);
         intent.putParcelableArrayListExtra(EXTRA_CONTACTS, parcelableContacts);
@@ -220,7 +220,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
 
             @Override
             public void onDestroyActionMode(android.support.v7.view.ActionMode mode) {
-                contactsViewModel.unubscribeSearch();
+                contactsViewModel.disposeSearch();
                 contactsViewModel.restoreContacts();
                 searchModeEnabled = false;
                 searchActionMode = null;

@@ -19,13 +19,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import collections.DiffObservableList;
-import me.tatarka.bindingcollectionadapter.OnItemBind;
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import me.tatarka.bindingcollectionadapter2.OnItemBind;
+import me.tatarka.bindingcollectionadapter2.collections.DiffObservableList;
 
 /**
  * Created by Aleksander Mielczarek on 03.12.2016.
@@ -59,9 +59,9 @@ public class ContactsViewModel {
     private final List<ContactViewModel> allContacts = new ArrayList<>();
     private final ContactRepository contactRepository;
     private final AppCompatActivity activity;
-    private final CompositeSubscription subscriptions = new CompositeSubscription();
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
-    private Subscription searchSubscription;
+    private Disposable searchDisposable;
     private ContactsViewModelListener viewModelListener;
 
     @Inject
@@ -75,10 +75,10 @@ public class ContactsViewModel {
     }
 
     public void loadContacts() {
-        subscriptions.add(contactRepository.findAll()
+        disposables.add(contactRepository.findAll()
                 .map(contact -> new ContactViewModel(this, contact))
                 .toList()
-                .doOnNext(allContacts::addAll)
+                .doOnSuccess(allContacts::addAll)
                 .map(contacts::calculateDiff)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -86,7 +86,7 @@ public class ContactsViewModel {
     }
 
     public void sendChosenContacts() {
-        subscriptions.add(Observable.from(contacts)
+        disposables.add(Observable.fromIterable(contacts)
                 .filter(contactViewModel -> contactViewModel.selected.get())
                 .map(contactViewModel -> contactViewModel.contact.get())
                 .toList()
@@ -106,7 +106,7 @@ public class ContactsViewModel {
     }
 
     public void chooseAllContacts() {
-        subscriptions.add(Observable.from(contacts)
+        disposables.add(Observable.fromIterable(contacts)
                 .filter(contactViewModel -> !contactViewModel.selected.get())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -114,7 +114,7 @@ public class ContactsViewModel {
     }
 
     public void deselectAllContacts() {
-        subscriptions.add(Observable.from(contacts)
+        disposables.add(Observable.fromIterable(contacts)
                 .filter(contactViewModel -> contactViewModel.selected.get())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -126,11 +126,11 @@ public class ContactsViewModel {
     }
 
     public void filterContacts(Observable<CharSequence> contactQuery) {
-        searchSubscription = contactQuery
+        searchDisposable = contactQuery
                 .observeOn(Schedulers.newThread())
                 .map(CharSequence::toString)
                 .map(String::toLowerCase)
-                .flatMap(query -> Observable.from(allContacts)
+                .flatMapSingle(query -> Observable.fromIterable(allContacts)
                         .filter(contact -> contact.contact.get().getName().toLowerCase().contains(query))
                         .toList())
                 .map(newContacts -> {
@@ -142,7 +142,7 @@ public class ContactsViewModel {
     }
 
     public void restoreContacts() {
-        subscriptions.add(Observable.just(allContacts)
+        disposables.add(Observable.just(allContacts)
                 .map(newContacts -> {
                     DiffUtil.DiffResult diffResult = contacts.calculateDiff(newContacts);
                     return Pair.create(newContacts, diffResult);
@@ -156,12 +156,12 @@ public class ContactsViewModel {
         viewModelListener.enableSearchMode();
     }
 
-    public void unubscribeSearch() {
-        searchSubscription.unsubscribe();
+    public void disposeSearch() {
+        searchDisposable.dispose();
     }
 
-    public void unsubscribe() {
-        subscriptions.clear();
+    public void dispose() {
+        disposables.clear();
     }
 
     public ContactsViewModelListener getViewModelListener() {

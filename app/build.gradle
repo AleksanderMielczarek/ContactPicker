@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
@@ -43,14 +42,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
 
     compile project(':contact-picker')
-    apt "org.parceler:parceler:$parcelerVersion"
-    apt "com.google.dagger:dagger-compiler:$daggerVersion"
-    apt "org.androidannotations:androidannotations:$androidannotationsVersion"
-}
-
-apt {
-    arguments {
-        androidManifestFile variant.outputs[0]?.processResources?.manifestFile
-        resourcePackageName android.defaultConfig.applicationId
-    }
+    annotationProcessor "org.parceler:parceler:$parcelerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    annotationProcessor "org.androidannotations:androidannotations:$androidannotationsVersion"
 }
