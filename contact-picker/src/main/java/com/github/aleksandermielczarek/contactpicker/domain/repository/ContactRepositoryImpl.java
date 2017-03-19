@@ -1,9 +1,11 @@
-package com.github.aleksandermielczarek.contactpicker.domain;
+package com.github.aleksandermielczarek.contactpicker.domain.repository;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+
+import com.github.aleksandermielczarek.contactpicker.domain.data.Contact;
 
 import java.util.ArrayList;
 import java.util.Collections;

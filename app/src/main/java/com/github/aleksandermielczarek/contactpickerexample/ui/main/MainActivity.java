@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.github.aleksandermielczarek.contactpicker.domain.Contact;
+import com.github.aleksandermielczarek.contactpicker.domain.data.Contact;
 import com.github.aleksandermielczarek.contactpicker.ui.contacts.ContactsActivity;
 import com.github.aleksandermielczarek.contactpickerexample.R;
 import com.github.aleksandermielczarek.contactpickerexample.component.AppComponent;

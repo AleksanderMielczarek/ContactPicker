@@ -19,7 +19,7 @@ import com.github.aleksandermielczarek.contactpicker.R;
 import com.github.aleksandermielczarek.contactpicker.component.DaggerActivityComponent;
 import com.github.aleksandermielczarek.contactpicker.databinding.ActivityContactsBinding;
 import com.github.aleksandermielczarek.contactpicker.databinding.MenuActionChosenCounterBinding;
-import com.github.aleksandermielczarek.contactpicker.domain.Contact;
+import com.github.aleksandermielczarek.contactpicker.domain.data.Contact;
 import com.github.aleksandermielczarek.contactpicker.module.ActivityModule;
 import com.github.aleksandermielczarek.permissionsdialogs.PermissionsDialogs;
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView;

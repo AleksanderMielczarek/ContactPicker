@@ -3,7 +3,7 @@ package com.github.aleksandermielczarek.contactpicker.ui.contacts;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 
-import com.github.aleksandermielczarek.contactpicker.domain.Contact;
+import com.github.aleksandermielczarek.contactpicker.domain.data.Contact;
 
 /**
  * Created by Aleksander Mielczarek on 03.12.2016.

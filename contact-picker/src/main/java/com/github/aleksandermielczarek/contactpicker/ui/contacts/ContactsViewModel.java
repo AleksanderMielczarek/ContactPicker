@@ -10,8 +10,8 @@ import android.util.Pair;
 
 import com.github.aleksandermielczarek.contactpicker.BR;
 import com.github.aleksandermielczarek.contactpicker.R;
-import com.github.aleksandermielczarek.contactpicker.domain.Contact;
-import com.github.aleksandermielczarek.contactpicker.domain.ContactRepository;
+import com.github.aleksandermielczarek.contactpicker.domain.data.Contact;
+import com.github.aleksandermielczarek.contactpicker.domain.repository.ContactRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;

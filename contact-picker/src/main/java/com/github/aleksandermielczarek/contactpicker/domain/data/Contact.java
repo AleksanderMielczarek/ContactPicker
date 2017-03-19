@@ -1,4 +1,4 @@
-package com.github.aleksandermielczarek.contactpicker.domain;
+package com.github.aleksandermielczarek.contactpicker.domain.data;
 
 import org.parceler.Parcel;
 

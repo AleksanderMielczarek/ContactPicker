@@ -1,7 +1,7 @@
 package com.github.aleksandermielczarek.contactpicker.module;
 
-import com.github.aleksandermielczarek.contactpicker.domain.ContactRepository;
-import com.github.aleksandermielczarek.contactpicker.domain.ContactRepositoryImpl;
+import com.github.aleksandermielczarek.contactpicker.domain.repository.ContactRepository;
+import com.github.aleksandermielczarek.contactpicker.domain.repository.ContactRepositoryImpl;
 
 import dagger.Binds;
 import dagger.Module;

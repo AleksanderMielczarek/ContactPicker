@@ -1,4 +1,6 @@
-package com.github.aleksandermielczarek.contactpicker.domain;
+package com.github.aleksandermielczarek.contactpicker.domain.repository;
+
+import com.github.aleksandermielczarek.contactpicker.domain.data.Contact;
 
 import io.reactivex.Observable;
 
