@@ -1,8 +1,9 @@
 package com.github.aleksandermielczarek.contactpicker.module;
 
-import android.content.ContentResolver;
 import android.support.v7.app.AppCompatActivity;
 
+import com.github.aleksandermielczarek.contactpicker.domain.repository.ContactRepository;
+import com.github.aleksandermielczarek.contactpicker.domain.repository.ContactRepositoryImpl;
 import com.github.aleksandermielczarek.napkin.module.NapkinActivityModule;
 import com.github.aleksandermielczarek.napkin.scope.ActivityScope;
 
@@ -14,14 +15,14 @@ import dagger.Provides;
  */
 @Module
 @ActivityScope
-public class ActivityModule extends NapkinActivityModule {
+public final class ActivityModule extends NapkinActivityModule {
 
     public ActivityModule(AppCompatActivity activity) {
         super(activity);
     }
 
     @Provides
-    ContentResolver provideContentResolver() {
-        return activity.getContentResolver();
+    ContactRepository provideContactRepository() {
+        return new ContactRepositoryImpl(activity);
     }
 }

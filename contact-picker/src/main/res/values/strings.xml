@@ -4,6 +4,7 @@
     <string name="permission_read_contacts_do_not_ask_again">In order to pick a contact, application needs permission. Please turn on this option in application settings and than try again.</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="message_error">Error</string>
 
     <string name="menu_select_all">Select all</string>
     <string name="menu_choose">Choose</string>

@@ -13,7 +13,7 @@ import com.github.aleksandermielczarek.contactpicker.domain.data.Contact;
  * Created by Aleksander Mielczarek on 03.12.2016.
  */
 
-public class TextViewBindingAdapter {
+public final class TextViewBindingAdapter {
 
     private static final SparseIntArray phoneTypes;
 
@@ -55,10 +55,10 @@ public class TextViewBindingAdapter {
         }
     }
 
-    @BindingAdapter("contactCounter")
-    public static void setContactCounter(TextView textView, Number counter) {
-        if (counter != null && counter.intValue() > 0) {
-            String counterText = String.valueOf(counter);
+    @BindingAdapter("number")
+    public static void setContactCounter(TextView textView, Number number) {
+        if (number != null) {
+            String counterText = String.valueOf(number);
             textView.setText(counterText);
         }
     }

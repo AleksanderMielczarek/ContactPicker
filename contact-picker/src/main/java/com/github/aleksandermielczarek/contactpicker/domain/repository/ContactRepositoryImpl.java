@@ -2,6 +2,7 @@ package com.github.aleksandermielczarek.contactpicker.domain.repository;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
@@ -14,45 +15,44 @@ import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by Aleksander Mielczarek on 03.12.2016.
  */
-public class ContactRepositoryImpl implements ContactRepository {
+public final class ContactRepositoryImpl implements ContactRepository {
 
     private final ContentResolver contentResolver;
 
     @Inject
-    public ContactRepositoryImpl(ContentResolver contentResolver) {
-        this.contentResolver = contentResolver;
+    public ContactRepositoryImpl(Context context) {
+        contentResolver = context.getContentResolver();
+
     }
 
-    private Contact mapRowToContact(long id, boolean primaryNumber, Cursor contactCursor, Cursor phoneCursor) {
+    private Contact mapRowToContact(long contactId, boolean primaryNumber, Cursor contactCursor, Cursor phoneCursor) {
         Contact contact = new Contact();
-        contact.setLookupKey(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY)));
-        contact.setId(id);
-        contact.setName(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)));
+        contact.setId(phoneCursor.getLong(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.RAW_CONTACT_ID)));
+        contact.setName(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)) + "_" + contactId + "_" + contact.getId());
+        contact.setPhoto(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI)));
         contact.setNumber(phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
         contact.setPhoneType(phoneCursor.getInt(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)));
-        contact.setPhoto(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI)));
         contact.setPrimaryNumber(primaryNumber);
         return contact;
     }
 
     @Override
     @SuppressLint("NewApi")
-    public Observable<Contact> findAll() {
-        return Observable.fromCallable(new Callable<List<Contact>>() {
+    public Single<List<Contact>> findAll() {
+        return Single.fromCallable(new Callable<List<Contact>>() {
             @Override
             public List<Contact> call() throws Exception {
                 try (Cursor contactCursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI,
                         new String[]{
-                                ContactsContract.Contacts.LOOKUP_KEY,
                                 ContactsContract.Contacts._ID,
                                 ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
-                                ContactsContract.Contacts.HAS_PHONE_NUMBER,
-                                ContactsContract.Contacts.PHOTO_URI
+                                ContactsContract.Contacts.PHOTO_URI,
+                                ContactsContract.Contacts.HAS_PHONE_NUMBER
                         },
                         ContactsContract.Contacts.HAS_PHONE_NUMBER + "=?",
                         new String[]{"1"},
@@ -61,24 +61,30 @@ public class ContactRepositoryImpl implements ContactRepository {
                     if (contactCursor != null && contactCursor.getCount() > 0) {
                         List<Contact> contacts = new ArrayList<>(contactCursor.getCount());
                         while (contactCursor.moveToNext()) {
-                            long id = contactCursor.getLong(contactCursor.getColumnIndex(ContactsContract.Contacts._ID));
+                            long contactId = contactCursor.getLong(contactCursor.getColumnIndex(ContactsContract.Contacts._ID));
                             try (Cursor phoneCursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                                     new String[]{
+                                            ContactsContract.CommonDataKinds.Phone.RAW_CONTACT_ID,
                                             ContactsContract.CommonDataKinds.Phone.NUMBER,
                                             ContactsContract.CommonDataKinds.Phone.TYPE
                                     },
                                     ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
-                                    new String[]{String.valueOf(id)},
-                                    null)) {
+                                    new String[]{String.valueOf(contactId)},
+                                    null);
+                                 Cursor rawContactCursor = contentResolver.query(ContactsContract.Data.CONTENT_URI,
+                                         new String[]{ContactsContract.Data.RAW_CONTACT_ID},
+                                         ContactsContract.Data.CONTACT_ID + "=?",
+                                         new String[]{String.valueOf(contactId)},
+                                         null)) {
 
                                 if (phoneCursor != null && phoneCursor.getCount() > 0) {
                                     if (phoneCursor.moveToNext()) {
-                                        Contact contact = mapRowToContact(id, true, contactCursor, phoneCursor);
+                                        Contact contact = mapRowToContact(contactId, true, contactCursor, phoneCursor);
                                         contacts.add(contact);
                                     }
 
                                     while (phoneCursor.moveToNext()) {
-                                        Contact contact = mapRowToContact(id, false, contactCursor, phoneCursor);
+                                        Contact contact = mapRowToContact(contactId, false, contactCursor, phoneCursor);
                                         contacts.add(contact);
                                     }
                                 }
@@ -90,7 +96,7 @@ public class ContactRepositoryImpl implements ContactRepository {
                     }
                 }
             }
-        }).flatMap(Observable::fromIterable);
+        });
     }
 
 }

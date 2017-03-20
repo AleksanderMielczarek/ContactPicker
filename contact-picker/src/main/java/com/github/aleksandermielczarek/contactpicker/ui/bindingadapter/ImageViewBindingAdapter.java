@@ -14,7 +14,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Aleksander Mielczarek on 03.12.2016.
  */
 
-public class ImageViewBindingAdapter {
+public final class ImageViewBindingAdapter {
 
     private static final ColorGenerator generator = ColorGenerator.MATERIAL;
     private static final TextDrawable.IShapeBuilder shapeBuilder = TextDrawable.builder();

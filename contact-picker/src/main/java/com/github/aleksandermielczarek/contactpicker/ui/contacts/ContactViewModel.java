@@ -8,17 +8,18 @@ import com.github.aleksandermielczarek.contactpicker.domain.data.Contact;
 /**
  * Created by Aleksander Mielczarek on 03.12.2016.
  */
-public class ContactViewModel {
+public final class ContactViewModel {
 
     public final ObservableField<Contact> contact = new ObservableField<>();
-    public final ObservableBoolean selected = new ObservableBoolean(false);
+    public final ObservableBoolean selected = new ObservableBoolean();
 
     private final ContactsViewModel contactsViewModel;
     private final ContactsViewModel.ContactsViewModelListener contactsViewModelListener;
 
-    public ContactViewModel(ContactsViewModel contactsViewModel, Contact contact) {
+    public ContactViewModel(ContactsViewModel contactsViewModel, Contact contact, boolean selected) {
         this.contactsViewModel = contactsViewModel;
         this.contact.set(contact);
+        this.selected.set(selected);
         contactsViewModelListener = contactsViewModel.getViewModelListener();
     }
 
@@ -42,7 +43,7 @@ public class ContactViewModel {
         if (!contactsViewModelListener.multipleChoiceModeEnabled()) {
             selected.set(true);
             contactsViewModel.numberOfChosenContacts.set(contactsViewModel.numberOfChosenContacts.get() + 1);
-           contactsViewModelListener.enableMultipleChoiceMode();
+            contactsViewModelListener.enableMultipleChoiceMode();
             return true;
         }
         return false;

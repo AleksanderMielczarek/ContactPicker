@@ -2,7 +2,9 @@ package com.github.aleksandermielczarek.contactpicker.domain.repository;
 
 import com.github.aleksandermielczarek.contactpicker.domain.data.Contact;
 
-import io.reactivex.Observable;
+import java.util.List;
+
+import io.reactivex.Single;
 
 /**
  * Created by Aleksander Mielczarek on 03.12.2016.
@@ -10,6 +12,6 @@ import io.reactivex.Observable;
 
 public interface ContactRepository {
 
-    Observable<Contact> findAll();
+    Single<List<Contact>> findAll();
 
 }

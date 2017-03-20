@@ -8,6 +8,7 @@
             name="viewModel"
             type="com.github.aleksandermielczarek.contactpicker.ui.contacts.ContactsViewModel" />
 
+        <import type="android.view.View" />
     </data>
 
     <TextView
@@ -15,6 +16,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorActionBarElements"
         android:textSize="24sp"
-        app:contactCounter="@{viewModel.numberOfChosenContacts}" />
+        android:visibility="@{viewModel.numberOfChosenContacts > 0 ? View.VISIBLE : View.INVISIBLE}"
+        app:number="@{viewModel.numberOfChosenContacts}" />
 
 </layout>
