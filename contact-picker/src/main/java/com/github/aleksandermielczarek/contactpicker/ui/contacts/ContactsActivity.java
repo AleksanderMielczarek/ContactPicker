@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.ActionMode;
@@ -83,11 +84,20 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
         binding = DataBindingUtil.setContentView(this, R.layout.activity_contacts);
         binding.setViewModel(contactsViewModel);
 
-        setSupportActionBar(binding.toolbar);
-        binding.toolbar.setTitle(getString(R.string.title));
+        setupToolbar();
 
         contactsViewModel.setViewModelListener(this);
         ContactsActivityPermissionsDispatcher.loadContactsWithCheck(this);
+    }
+
+    private void setupToolbar() {
+        binding.toolbar.setTitle(getString(R.string.title));
+        setSupportActionBar(binding.toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            binding.toolbar.setNavigationOnClickListener(view -> onBackPressed());
+        }
     }
 
     @Override

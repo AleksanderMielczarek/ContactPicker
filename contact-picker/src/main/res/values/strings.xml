@@ -1,5 +1,5 @@
 <resources>
-    <string name="title">Contact Picker</string>
+    <string name="title">Pick contact</string>
     <string name="permission_read_contacts_rationale">In order to pick a contact, application needs permission.</string>
     <string name="permission_read_contacts_do_not_ask_again">In order to pick a contact, application needs permission. Please turn on this option in application settings and than try again.</string>
     <string name="dialog_ok">OK</string>
