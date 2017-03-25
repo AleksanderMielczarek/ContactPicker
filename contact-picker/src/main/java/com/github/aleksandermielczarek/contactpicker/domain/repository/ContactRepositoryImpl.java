@@ -30,10 +30,10 @@ public final class ContactRepositoryImpl implements ContactRepository {
 
     }
 
-    private Contact mapRowToContact(long contactId, boolean primaryNumber, Cursor contactCursor, Cursor phoneCursor) {
+    private Contact mapRowToContact(boolean primaryNumber, Cursor contactCursor, Cursor phoneCursor) {
         Contact contact = new Contact();
-        contact.setId(phoneCursor.getLong(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.RAW_CONTACT_ID)));
-        contact.setName(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)) + "_" + contactId + "_" + contact.getId());
+        contact.setId(phoneCursor.getLong(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID)));
+        contact.setName(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)));
         contact.setPhoto(contactCursor.getString(contactCursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI)));
         contact.setNumber(phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
         contact.setPhoneType(phoneCursor.getInt(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)));
@@ -64,27 +64,22 @@ public final class ContactRepositoryImpl implements ContactRepository {
                             long contactId = contactCursor.getLong(contactCursor.getColumnIndex(ContactsContract.Contacts._ID));
                             try (Cursor phoneCursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                                     new String[]{
-                                            ContactsContract.CommonDataKinds.Phone.RAW_CONTACT_ID,
+                                            ContactsContract.CommonDataKinds.Phone._ID,
                                             ContactsContract.CommonDataKinds.Phone.NUMBER,
                                             ContactsContract.CommonDataKinds.Phone.TYPE
                                     },
                                     ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
                                     new String[]{String.valueOf(contactId)},
-                                    null);
-                                 Cursor rawContactCursor = contentResolver.query(ContactsContract.Data.CONTENT_URI,
-                                         new String[]{ContactsContract.Data.RAW_CONTACT_ID},
-                                         ContactsContract.Data.CONTACT_ID + "=?",
-                                         new String[]{String.valueOf(contactId)},
-                                         null)) {
+                                    null)) {
 
                                 if (phoneCursor != null && phoneCursor.getCount() > 0) {
                                     if (phoneCursor.moveToNext()) {
-                                        Contact contact = mapRowToContact(contactId, true, contactCursor, phoneCursor);
+                                        Contact contact = mapRowToContact(true, contactCursor, phoneCursor);
                                         contacts.add(contact);
                                     }
 
                                     while (phoneCursor.moveToNext()) {
-                                        Contact contact = mapRowToContact(contactId, false, contactCursor, phoneCursor);
+                                        Contact contact = mapRowToContact(false, contactCursor, phoneCursor);
                                         contacts.add(contact);
                                     }
                                 }
