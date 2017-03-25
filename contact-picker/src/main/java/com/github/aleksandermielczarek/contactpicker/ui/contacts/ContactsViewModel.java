@@ -3,7 +3,6 @@ package com.github.aleksandermielczarek.contactpicker.ui.contacts;
 import android.databinding.ObservableInt;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
-import android.text.TextUtils;
 import android.util.Pair;
 
 import com.github.aleksandermielczarek.contactpicker.BR;
@@ -25,7 +24,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
-import me.tatarka.bindingcollectionadapter2.OnItemBind;
+import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import me.tatarka.bindingcollectionadapter2.collections.DiffObservableList;
 
 /**
@@ -45,16 +44,7 @@ public final class ContactsViewModel {
             return oldItem.equals(newItem);
         }
     });
-    public final OnItemBind<ContactViewModel> contactItemView = (itemBinding, position, item) -> {
-        itemBinding.variableId(BR.viewModel);
-        if (!item.contact.get().isPrimaryNumber()) {
-            itemBinding.layoutRes(R.layout.item_contact_no_photo);
-        } else if (TextUtils.isEmpty(item.contact.get().getPhoto())) {
-            itemBinding.layoutRes(R.layout.item_contact_name_photo);
-        } else {
-            itemBinding.layoutRes(R.layout.item_contact_photo);
-        }
-    };
+    public final ItemBinding<ContactViewModel> contactItemView = ItemBinding.of(BR.viewModel, R.layout.item_contact);
     public final ObservableInt numberOfChosenContacts = new ObservableInt();
 
     private final List<ContactViewModel> allContacts = new ArrayList<>();
