@@ -34,7 +34,7 @@ public final class ImageViewBindingAdapter {
             TextDrawable textDrawable = shapeBuilder.buildRound(name.substring(0, 1), color);
             imageView.setImageDrawable(textDrawable);
         } else {
-            imageView.setVisibility(View.INVISIBLE);
+            imageView.setVisibility(View.GONE);
         }
     }
 
@@ -46,7 +46,7 @@ public final class ImageViewBindingAdapter {
                     .load(contact.getPhoto())
                     .into(imageView);
         } else {
-            imageView.setVisibility(View.INVISIBLE);
+            imageView.setVisibility(View.GONE);
         }
     }
 

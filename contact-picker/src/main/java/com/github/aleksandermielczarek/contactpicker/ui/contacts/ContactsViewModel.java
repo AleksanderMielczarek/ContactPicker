@@ -86,7 +86,7 @@ public final class ContactsViewModel {
                         viewModelListener.enableSearchMode(query);
                     }
                     if (multipleChoiceEnabled) {
-                        viewModelListener.enableMultipleChoiceMode();
+                        enableMultipleChoiceMode();
                     }
                 }, viewModelListener::showError));
     }
@@ -131,13 +131,13 @@ public final class ContactsViewModel {
 
     public void deselectAllContacts() {
         disposables.add(Observable.fromIterable(contacts)
-                .filter(contactViewModel -> contactViewModel.selected.get())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(contactViewModel -> contactViewModel.selected.set(false),
-                        throwable -> {
-                            //do nothing
+                .subscribe(contactViewModel -> {
+                            contactViewModel.selected.set(false);
+                            contactViewModel.multipleChoiceMode.set(false);
                         },
+                        viewModelListener::showError,
                         () -> numberOfChosenContacts.set(0)));
     }
 
@@ -171,6 +171,15 @@ public final class ContactsViewModel {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(listDiffResultPair -> contacts.update(listDiffResultPair.first, listDiffResultPair.second),
+                        viewModelListener::showError));
+    }
+
+    public void enableMultipleChoiceMode() {
+        viewModelListener.enableMultipleChoiceMode();
+        disposables.add(Observable.fromIterable(contacts)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(contactViewModel -> contactViewModel.multipleChoiceMode.set(true),
                         viewModelListener::showError));
     }
 

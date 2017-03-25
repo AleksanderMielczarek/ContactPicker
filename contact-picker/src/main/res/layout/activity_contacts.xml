@@ -35,10 +35,13 @@
             android:id="@+id/contactsRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
             app:itemBinding="@{viewModel.contactItemView}"
             app:items="@{viewModel.contacts}"
             app:layoutManager="@{LayoutManagers.linear()}"
-            tools:listitem="@layout/item_contact_photo" />
+            tools:listitem="@layout/item_contact" />
 
     </LinearLayout>
 

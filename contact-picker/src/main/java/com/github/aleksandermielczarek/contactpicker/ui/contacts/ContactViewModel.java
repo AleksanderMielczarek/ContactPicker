@@ -12,6 +12,7 @@ public final class ContactViewModel {
 
     public final ObservableField<Contact> contact = new ObservableField<>();
     public final ObservableBoolean selected = new ObservableBoolean();
+    public final ObservableBoolean multipleChoiceMode = new ObservableBoolean();
 
     private final ContactsViewModel contactsViewModel;
     private final ContactsViewModel.ContactsViewModelListener contactsViewModelListener;
@@ -28,7 +29,7 @@ public final class ContactViewModel {
             if (selected.get()) {
                 contactsViewModel.numberOfChosenContacts.set(contactsViewModel.numberOfChosenContacts.get() - 1);
                 if (contactsViewModel.numberOfChosenContacts.get() == 0) {
-                    contactsViewModel.getViewModelListener().disableMultipleChoiceMode();
+                    contactsViewModelListener.disableMultipleChoiceMode();
                 }
             } else {
                 contactsViewModel.numberOfChosenContacts.set(contactsViewModel.numberOfChosenContacts.get() + 1);
@@ -43,7 +44,8 @@ public final class ContactViewModel {
         if (!contactsViewModelListener.multipleChoiceModeEnabled()) {
             selected.set(true);
             contactsViewModel.numberOfChosenContacts.set(contactsViewModel.numberOfChosenContacts.get() + 1);
-            contactsViewModelListener.enableMultipleChoiceMode();
+            multipleChoiceMode.set(true);
+            contactsViewModel.enableMultipleChoiceMode();
             return true;
         }
         return false;

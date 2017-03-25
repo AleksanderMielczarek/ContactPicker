@@ -9,12 +9,14 @@
             name="viewModel"
             type="com.github.aleksandermielczarek.contactpicker.ui.contacts.ContactViewModel" />
 
+        <import type="android.view.View" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:background="@drawable/background_item_contact"
+        android:animateLayoutChanges="true"
+        android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:gravity="center_vertical"
         android:onClick="@{() -> viewModel.pickContact()}"
@@ -23,30 +25,33 @@
         android:selected="@{viewModel.selected}">
 
         <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginStart="16dp">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
                 app:contactPhoto="@{viewModel.contact}" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
                 app:contactPhoto="@{viewModel.contact}" />
 
         </FrameLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
@@ -70,6 +75,16 @@
                 tools:text="PHONE 123 123 123" />
 
         </LinearLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:checked="@{viewModel.selected}"
+            android:clickable="false"
+            android:visibility="@{viewModel.multipleChoiceMode ? View.VISIBLE : View.GONE}"
+            app:buttonTint="?android:textColorSecondary" />
 
     </LinearLayout>
 
