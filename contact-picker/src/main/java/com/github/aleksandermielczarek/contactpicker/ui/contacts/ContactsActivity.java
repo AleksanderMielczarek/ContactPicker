@@ -21,8 +21,8 @@ import android.view.MenuItem;
 
 import com.github.aleksandermielczarek.contactpicker.R;
 import com.github.aleksandermielczarek.contactpicker.component.DaggerActivityComponent;
-import com.github.aleksandermielczarek.contactpicker.databinding.ActivityContactsBinding;
-import com.github.aleksandermielczarek.contactpicker.databinding.MenuActionChosenCounterBinding;
+import com.github.aleksandermielczarek.contactpicker.databinding.ContactPickerActionModeChosenCounterBinding;
+import com.github.aleksandermielczarek.contactpicker.databinding.ContactPickerActivityContactsBinding;
 import com.github.aleksandermielczarek.contactpicker.domain.data.Contact;
 import com.github.aleksandermielczarek.contactpicker.module.ActivityModule;
 import com.github.aleksandermielczarek.contactpicker.util.Utils;
@@ -67,7 +67,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     @Inject
     protected ContactsViewModel contactsViewModel;
 
-    private ActivityContactsBinding binding;
+    private ContactPickerActivityContactsBinding binding;
     private boolean multipleChoiceModeEnabled = false;
     private ActionMode multipleChoiceActionMode;
     private boolean searchModeEnabled = false;
@@ -82,7 +82,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
 
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_contacts);
+        binding = DataBindingUtil.setContentView(this, R.layout.contact_picker_activity_contacts);
         binding.setViewModel(contactsViewModel);
 
         setupToolbar();
@@ -92,7 +92,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     }
 
     private void setupToolbar() {
-        binding.toolbar.setTitle(getString(R.string.title));
+        binding.toolbar.setTitle(getString(R.string.contact_picker_title));
         setSupportActionBar(binding.toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -103,9 +103,9 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
+        getMenuInflater().inflate(R.menu.contact_picker_menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.menu_action_search);
-        int menuItemColor = Utils.colorFromAttr(this, R.attr.toolbarElementsColor, R.color.contactPickerColorToolbarElements);
+        int menuItemColor = Utils.colorFromAttr(this, R.attr.contactPickerToolbarElementsColor, R.color.contactPickerColorToolbarElements);
         Utils.tintMenuIcon(this, searchItem, menuItemColor);
         searchItem.setOnMenuItemClickListener(menuItem -> {
             enableSearchMode("");
@@ -140,12 +140,12 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
 
     @OnShowRationale(Manifest.permission.READ_CONTACTS)
     protected void showRationaleForLoadContacts(PermissionRequest request) {
-        PermissionsDialogs.showRationaleDialog(this, request, R.string.permission_read_contacts_rationale, R.string.dialog_ok, R.string.dialog_cancel);
+        PermissionsDialogs.showRationaleDialog(this, request, R.string.contact_picker_permission_read_contacts_rationale, R.string.contact_picker_dialog_ok, R.string.contact_picker_dialog_cancel);
     }
 
     @OnNeverAskAgain(Manifest.permission.READ_CONTACTS)
     protected void showNeverAskForLoadContacts() {
-        PermissionsDialogs.showNeverAskAgainDialog(this, R.string.permission_read_contacts_do_not_ask_again, R.string.dialog_ok, R.string.dialog_cancel);
+        PermissionsDialogs.showNeverAskAgainDialog(this, R.string.contact_picker_permission_read_contacts_do_not_ask_again, R.string.contact_picker_dialog_ok, R.string.contact_picker_dialog_cancel);
     }
 
     @Override
@@ -192,7 +192,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
 
     @Override
     public void showError(Throwable throwable) {
-        Snackbar.make(binding.contactsRecycler, R.string.message_error, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(binding.contactsRecycler, R.string.contact_picker_message_error, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -204,16 +204,16 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
 
         @Override
         public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-            MenuActionChosenCounterBinding counterBinding = MenuActionChosenCounterBinding.inflate(getLayoutInflater());
+            ContactPickerActionModeChosenCounterBinding counterBinding = ContactPickerActionModeChosenCounterBinding.inflate(getLayoutInflater());
             counterBinding.setViewModel(contactsViewModel);
             actionMode.setCustomView(counterBinding.getRoot());
             MenuInflater menuInflater = getMenuInflater();
-            menuInflater.inflate(R.menu.menu_action_select_multiple, menu);
+            menuInflater.inflate(R.menu.contact_picker_menu_action_mode_select_multiple, menu);
             multipleChoiceModeEnabled = true;
             multipleChoiceActionMode = actionMode;
-            MenuItem chooseMenuItem = menu.findItem(R.id.menu_action_choose);
-            MenuItem selectMenuItem = menu.findItem(R.id.menu_action_select_all);
-            int menuItemColor = Utils.colorFromAttr(ContactsActivity.this, R.attr.actionModeElementsColor, R.color.contactPickerDefaultColorActionModeElements);
+            MenuItem chooseMenuItem = menu.findItem(R.id.contact_picker_menu_action_choose);
+            MenuItem selectMenuItem = menu.findItem(R.id.contact_picker_menu_action_select_all);
+            int menuItemColor = Utils.colorFromAttr(ContactsActivity.this, R.attr.contactPickerActionModeElementsColor, R.color.contactPickerDefaultColorActionModeElements);
             Utils.tintMenuIcon(ContactsActivity.this, chooseMenuItem, menuItemColor);
             Utils.tintMenuIcon(ContactsActivity.this, selectMenuItem, menuItemColor);
             return true;
@@ -226,11 +226,11 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
 
         @Override
         public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-            if (menuItem.getItemId() == R.id.menu_action_choose) {
+            if (menuItem.getItemId() == R.id.contact_picker_menu_action_choose) {
                 contactsViewModel.sendChosenContacts();
                 actionMode.finish();
                 return true;
-            } else if (menuItem.getItemId() == R.id.menu_action_select_all) {
+            } else if (menuItem.getItemId() == R.id.contact_picker_menu_action_select_all) {
                 contactsViewModel.chooseAllContacts();
                 return true;
             }
@@ -262,7 +262,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
         @SuppressLint("InflateParams")
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            searchView = (SearchView) getLayoutInflater().inflate(R.layout.menu_action_search, null);
+            searchView = (SearchView) getLayoutInflater().inflate(R.layout.contact_picker_action_mode_search, null);
             mode.setCustomView(searchView);
             searchView.setQuery(query, false);
             contactsViewModel.filterContacts(RxSearchView.queryTextChanges(searchView));

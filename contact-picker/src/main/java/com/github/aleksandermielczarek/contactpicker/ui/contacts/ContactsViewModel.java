@@ -44,7 +44,7 @@ public final class ContactsViewModel {
             return oldItem.equals(newItem);
         }
     });
-    public final ItemBinding<ContactViewModel> contactItemView = ItemBinding.of(BR.viewModel, R.layout.item_contact);
+    public final ItemBinding<ContactViewModel> contactItemView = ItemBinding.of(BR.viewModel, R.layout.contact_picker_item_contact);
     public final ObservableInt numberOfChosenContacts = new ObservableInt();
 
     private final List<ContactViewModel> allContacts = new ArrayList<>();

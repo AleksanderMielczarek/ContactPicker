@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="toolbarElementsColor" format="color" />
-    <attr name="contactNameColor" format="color" />
-    <attr name="contactPhoneColor" format="color" />
-    <attr name="actionModeElementsColor" format="color" />
-    <attr name="actionModeCounterColor" format="color" />
+    <attr name="contactPickerToolbarElementsColor" format="color" />
+    <attr name="contactPickerContactNameColor" format="color" />
+    <attr name="contactPickerContactPhoneColor" format="color" />
+    <attr name="contactPickerActionModeElementsColor" format="color" />
+    <attr name="contactPickerActionModeCounterColor" format="color" />
 </resources>

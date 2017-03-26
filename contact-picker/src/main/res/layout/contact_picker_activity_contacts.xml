@@ -41,7 +41,7 @@
             app:itemBinding="@{viewModel.contactItemView}"
             app:items="@{viewModel.contacts}"
             app:layoutManager="@{LayoutManagers.linear()}"
-            tools:listitem="@layout/item_contact" />
+            tools:listitem="@layout/contact_picker_item_contact" />
 
     </LinearLayout>
 

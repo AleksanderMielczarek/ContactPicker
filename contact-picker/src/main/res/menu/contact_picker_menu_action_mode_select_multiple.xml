@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_action_select_all"
+        android:id="@+id/contact_picker_menu_action_select_all"
         android:icon="@drawable/ic_select_all_black_24dp"
-        android:title="@string/menu_select_all"
+        android:title="@string/contact_picker_menu_select_all"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_action_choose"
+        android:id="@+id/contact_picker_menu_action_choose"
         android:icon="@drawable/ic_done_black_24dp"
-        android:title="@string/menu_choose"
+        android:title="@string/contact_picker_menu_choose"
         app:showAsAction="always" />
 
 </menu>
