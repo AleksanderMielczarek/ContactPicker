@@ -9,8 +9,6 @@
             name="viewModel"
             type="com.github.aleksandermielczarek.contactpicker.ui.contacts.ContactsViewModel" />
 
-        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
-
     </data>
 
     <LinearLayout
@@ -24,11 +22,11 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.v7.widget.Toolbar
-                app:title="?contactPickerTitle"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="?contactPickerTitle" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -41,7 +39,6 @@
             android:paddingTop="8dp"
             app:itemBinding="@{viewModel.contactItemView}"
             app:items="@{viewModel.contacts}"
-            app:layoutManager="@{LayoutManagers.linear()}"
             tools:listitem="@layout/contact_picker_item_contact" />
 
     </LinearLayout>

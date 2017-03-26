@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -85,6 +86,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
         binding = DataBindingUtil.setContentView(this, R.layout.contact_picker_activity_contacts);
         binding.setViewModel(contactsViewModel);
 
+        binding.contactsRecycler.setLayoutManager(new LinearLayoutManager(this));
         setupToolbar();
 
         contactsViewModel.setViewModelListener(this);
