@@ -16,6 +16,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.github.aleksandermielczarek.contactpicker.ui.contacts.ContactsActivity_"
+            android:theme="@style/ContactPickerTheme" />
     </application>
 
 </manifest>

@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:animateLayoutChanges="true"
-        android:background="?attr/selectableItemBackground"
+        android:background="?selectableItemBackground"
         android:clickable="true"
         android:gravity="center_vertical"
         android:onClick="@{() -> viewModel.pickContact()}"
@@ -60,7 +60,7 @@
                 android:ellipsize="end"
                 android:lines="1"
                 android:text="@{viewModel.contact.name}"
-                android:textColor="?android:textColorPrimary"
+                android:textColor="?contactNameColor"
                 android:textSize="16sp"
                 tools:text="Jan Kowalski" />
 
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textColor="?android:textColorSecondary"
+                android:textColor="?contactPhoneColor"
                 android:textSize="14sp"
                 app:contactPhoneTypeAndNumber="@{viewModel.contact}"
                 tools:text="PHONE 123 123 123" />
@@ -84,7 +84,7 @@
             android:checked="@{viewModel.selected}"
             android:clickable="false"
             android:visibility="@{viewModel.multipleChoiceMode ? View.VISIBLE : View.GONE}"
-            app:buttonTint="?android:textColorSecondary" />
+            />
 
     </LinearLayout>
 

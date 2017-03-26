@@ -3,20 +3,25 @@
     <!-- Base application theme. -->
     <style name="ContactPickerTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/contactPickerColorPrimary</item>
+        <item name="colorPrimaryDark">@color/contactPickerColorPrimaryDark</item>
+        <item name="colorAccent">@color/contactPickerColorAccent</item>
+        <item name="toolbarElementsColor">@color/contactPickerColorToolbarElements</item>
+        <item name="contactNameColor">?android:textColorPrimary</item>
+        <item name="contactPhoneColor">?android:textColorSecondary</item>
+        <item name="actionModeElementsColor">?android:textColorSecondary</item>
+        <item name="actionModeCounterColor">?android:textColorPrimary</item>
+        <item name="android:textColorHint">?android:textColorSecondary</item>
+        <item name="actionModeBackground">@color/contactPickerColorPrimaryActionMode</item>
+
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeStyle">@style/ActionModeStyle</item>
-        <item name="actionModeCloseButtonStyle">@style/ActionModeCloseButton</item>
+        <item name="actionModeCloseButtonStyle">
+            @style/ContactPickerTheme.ActionModeCloseButtonStyle
+        </item>
     </style>
 
-    <style name="ActionModeStyle" parent="Widget.AppCompat.ActionMode">
-        <item name="background">@color/colorPrimaryActionBar</item>
-    </style>
-
-    <style name="ActionModeCloseButton" parent="Widget.AppCompat.ActionButton.CloseMode">
-        <item name="android:tint">@color/colorActionBarElements</item>
+    <style name="ContactPickerTheme.ActionModeCloseButtonStyle" parent="Widget.AppCompat.ActionButton.CloseMode">
+        <item name="android:tint">?colorAccent</item>
     </style>
 
 </resources>

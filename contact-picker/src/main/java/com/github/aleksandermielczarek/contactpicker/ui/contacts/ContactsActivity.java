@@ -1,6 +1,7 @@
 package com.github.aleksandermielczarek.contactpicker.ui.contacts;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -10,7 +11,6 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -25,6 +25,7 @@ import com.github.aleksandermielczarek.contactpicker.databinding.ActivityContact
 import com.github.aleksandermielczarek.contactpicker.databinding.MenuActionChosenCounterBinding;
 import com.github.aleksandermielczarek.contactpicker.domain.data.Contact;
 import com.github.aleksandermielczarek.contactpicker.module.ActivityModule;
+import com.github.aleksandermielczarek.contactpicker.util.Utils;
 import com.github.aleksandermielczarek.permissionsdialogs.PermissionsDialogs;
 import com.jakewharton.rxbinding2.support.v7.widget.RxSearchView;
 
@@ -104,6 +105,8 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.menu_action_search);
+        int menuItemColor = Utils.colorFromAttr(this, R.attr.toolbarElementsColor, R.color.contactPickerColorToolbarElements);
+        Utils.tintMenuIcon(this, searchItem, menuItemColor);
         searchItem.setOnMenuItemClickListener(menuItem -> {
             enableSearchMode("");
             return true;
@@ -184,7 +187,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
 
     @Override
     public void enableSearchMode(String query) {
-        new Handler().post(() -> startSupportActionMode(new SearchActionMode(query)));
+        new Handler().post(() -> startActionMode(new SearchActionMode(query)));
     }
 
     @Override
@@ -208,6 +211,11 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
             menuInflater.inflate(R.menu.menu_action_select_multiple, menu);
             multipleChoiceModeEnabled = true;
             multipleChoiceActionMode = actionMode;
+            MenuItem chooseMenuItem = menu.findItem(R.id.menu_action_choose);
+            MenuItem selectMenuItem = menu.findItem(R.id.menu_action_select_all);
+            int menuItemColor = Utils.colorFromAttr(ContactsActivity.this, R.attr.actionModeElementsColor, R.color.contactPickerDefaultColorActionModeElements);
+            Utils.tintMenuIcon(ContactsActivity.this, chooseMenuItem, menuItemColor);
+            Utils.tintMenuIcon(ContactsActivity.this, selectMenuItem, menuItemColor);
             return true;
         }
 
@@ -241,7 +249,7 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
         }
     }
 
-    private final class SearchActionMode implements android.support.v7.view.ActionMode.Callback {
+    private final class SearchActionMode implements ActionMode.Callback {
 
         private final String query;
 
@@ -251,12 +259,11 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
             this.query = query;
         }
 
+        @SuppressLint("InflateParams")
         @Override
-        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
-            MenuInflater menuInflater = getMenuInflater();
-            menuInflater.inflate(R.menu.menu_action_search, menu);
-            searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.menu_action_search));
-            searchView.setIconifiedByDefault(false);
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            searchView = (SearchView) getLayoutInflater().inflate(R.layout.menu_action_search, null);
+            mode.setCustomView(searchView);
             searchView.setQuery(query, false);
             contactsViewModel.filterContacts(RxSearchView.queryTextChanges(searchView));
             searchModeEnabled = true;
@@ -264,18 +271,18 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
         }
 
         @Override
-        public boolean onPrepareActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             searchView.requestFocus();
             return true;
         }
 
         @Override
-        public boolean onActionItemClicked(android.support.v7.view.ActionMode mode, MenuItem item) {
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             return false;
         }
 
         @Override
-        public void onDestroyActionMode(android.support.v7.view.ActionMode mode) {
+        public void onDestroyActionMode(ActionMode mode) {
             contactsViewModel.disposeSearch();
             if (!shouldRestoreSearchMode) {
                 contactsViewModel.restoreContacts();
