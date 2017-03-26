@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_action_search"
         android:icon="@drawable/ic_search_black_24dp"
-        android:title="@string/contact_picker_menu_search"
+        android:title="?contactPickerMenuSearch"
         app:showAsAction="always" />
 
 </menu>

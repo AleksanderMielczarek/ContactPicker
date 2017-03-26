@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorRes;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.MenuItem;
@@ -33,5 +34,14 @@ public final class Utils {
         int color = ta.getResourceId(0, defaultColor);
         ta.recycle();
         return color;
+    }
+
+    @StringRes
+    public static int stringFromAttr(Context context, @AttrRes int stringAttr, @StringRes int defaultString) {
+        int[] attrs = {stringAttr};
+        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs);
+        int string = ta.getResourceId(0, defaultString);
+        ta.recycle();
+        return string;
     }
 }

@@ -8,6 +8,6 @@
     android:paddingStart="-16dp"
     app:iconifiedByDefault="false"
     app:queryBackground="@android:color/transparent"
-    app:queryHint="@string/contact_picker_search_hint"
+    app:queryHint="?contactPickerSearchHint"
     app:searchIcon="@null"
     tools:ignore="RtlSymmetry" />

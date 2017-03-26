@@ -92,7 +92,6 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
     }
 
     private void setupToolbar() {
-        binding.toolbar.setTitle(getString(R.string.contact_picker_title));
         setSupportActionBar(binding.toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -140,12 +139,18 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
 
     @OnShowRationale(Manifest.permission.READ_CONTACTS)
     protected void showRationaleForLoadContacts(PermissionRequest request) {
-        PermissionsDialogs.showRationaleDialog(this, request, R.string.contact_picker_permission_read_contacts_rationale, R.string.contact_picker_dialog_ok, R.string.contact_picker_dialog_cancel);
+        PermissionsDialogs.showRationaleDialog(this, request,
+                Utils.stringFromAttr(this, R.attr.contactPickerPermissionReadContactsRationale, R.string.contact_picker_permission_read_contacts_rationale),
+                Utils.stringFromAttr(this, R.attr.contactPickerDialogOk, R.string.contact_picker_dialog_ok),
+                Utils.stringFromAttr(this, R.attr.contactPickerDialogCancel, R.string.contact_picker_dialog_cancel));
     }
 
     @OnNeverAskAgain(Manifest.permission.READ_CONTACTS)
     protected void showNeverAskForLoadContacts() {
-        PermissionsDialogs.showNeverAskAgainDialog(this, R.string.contact_picker_permission_read_contacts_do_not_ask_again, R.string.contact_picker_dialog_ok, R.string.contact_picker_dialog_cancel);
+        PermissionsDialogs.showNeverAskAgainDialog(this,
+                Utils.stringFromAttr(this, R.attr.contactPickerPermissionReadContactsDoNotAskAgain, R.string.contact_picker_permission_read_contacts_do_not_ask_again),
+                Utils.stringFromAttr(this, R.attr.contactPickerDialogOk, R.string.contact_picker_dialog_ok),
+                Utils.stringFromAttr(this, R.attr.contactPickerDialogCancel, R.string.contact_picker_dialog_cancel));
     }
 
     @Override
@@ -192,7 +197,9 @@ public class ContactsActivity extends AppCompatActivity implements ContactsViewM
 
     @Override
     public void showError(Throwable throwable) {
-        Snackbar.make(binding.contactsRecycler, R.string.contact_picker_message_error, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(binding.contactsRecycler,
+                Utils.stringFromAttr(this, R.attr.contactPickerMessageError, R.string.contact_picker_message_error),
+                Snackbar.LENGTH_LONG).show();
     }
 
     @Override

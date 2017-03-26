@@ -5,4 +5,35 @@
     <attr name="contactPickerContactPhoneColor" format="color" />
     <attr name="contactPickerActionModeElementsColor" format="color" />
     <attr name="contactPickerActionModeCounterColor" format="color" />
+
+    <attr name="contactPickerTitle" format="string" />
+    <attr name="contactPickerPermissionReadContactsRationale" format="string" />
+    <attr name="contactPickerPermissionReadContactsDoNotAskAgain" format="string" />
+    <attr name="contactPickerDialogOk" format="string" />
+    <attr name="contactPickerDialogCancel" format="string" />
+    <attr name="contactPickerMessageError" format="string" />
+    <attr name="contactPickerMenuSelectAll" format="string" />
+    <attr name="contactPickerMenuChoose" format="string" />
+    <attr name="contactPickerMenuSearch" format="string" />
+    <attr name="contactPickerSearchHint" format="string" />
+    <attr name="contactPickerNumberTypeAssistant" format="string" />
+    <attr name="contactPickerNumberTypeCallback" format="string" />
+    <attr name="contactPickerNumberTypeCar" format="string" />
+    <attr name="contactPickerNumberTypeCompanyMain" format="string" />
+    <attr name="contactPickerNumberTypeFaxHome" format="string" />
+    <attr name="contactPickerNumberTypeFaxWork" format="string" />
+    <attr name="contactPickerNumberTypeHome" format="string" />
+    <attr name="contactPickerNumberTypeIsdn" format="string" />
+    <attr name="contactPickerNumberTypeMain" format="string" />
+    <attr name="contactPickerNumberTypeMms" format="string" />
+    <attr name="contactPickerNumberTypeMobile" format="string" />
+    <attr name="contactPickerNumberTypeOther" format="string" />
+    <attr name="contactPickerNumberTypeOtherFax" format="string" />
+    <attr name="contactPickerNumberTypePager" format="string" />
+    <attr name="contactPickerNumberTypeRadio" format="string" />
+    <attr name="contactPickerNumberTypeTelex" format="string" />
+    <attr name="contactPickerNumberTypeTtyTdd" format="string" />
+    <attr name="contactPickerNumberTypeWork" format="string" />
+    <attr name="contactPickerNumberTypeWorkMobile" format="string" />
+    <attr name="contactPickerNumberTypeWorkPager" format="string" />
 </resources>

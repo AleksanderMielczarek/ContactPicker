@@ -3,21 +3,52 @@
     <!-- Base application theme. -->
     <style name="ContactPickerTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="contactPickerToolbarElementsColor">@color/contactPickerColorToolbarElements
+        </item>
+        <item name="contactPickerContactNameColor">?android:textColorPrimary</item>
+        <item name="contactPickerContactPhoneColor">?android:textColorSecondary</item>
+        <item name="contactPickerActionModeElementsColor">?android:textColorSecondary</item>
+        <item name="contactPickerActionModeCounterColor">?android:textColorPrimary</item>
+
         <item name="colorPrimary">@color/contactPickerColorPrimary</item>
         <item name="colorPrimaryDark">@color/contactPickerColorPrimaryDark</item>
         <item name="colorAccent">@color/contactPickerColorAccent</item>
-        <item name="toolbarElementsColor">@color/contactPickerColorToolbarElements</item>
-        <item name="contactNameColor">?android:textColorPrimary</item>
-        <item name="contactPhoneColor">?android:textColorSecondary</item>
-        <item name="actionModeElementsColor">?android:textColorSecondary</item>
-        <item name="actionModeCounterColor">?android:textColorPrimary</item>
         <item name="android:textColorHint">?android:textColorSecondary</item>
         <item name="actionModeBackground">@color/contactPickerColorPrimaryActionMode</item>
 
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeCloseButtonStyle">
-            @style/ContactPickerTheme.ActionModeCloseButtonStyle
-        </item>
+        <item name="actionModeCloseButtonStyle">@style/ContactPickerTheme.ActionModeCloseButtonStyle</item>
+
+        <item name="contactPickerTitle">@string/contact_picker_title</item>
+        <item name="contactPickerPermissionReadContactsRationale">@string/contact_picker_permission_read_contacts_rationale</item>
+        <item name="contactPickerPermissionReadContactsDoNotAskAgain">@string/contact_picker_permission_read_contacts_do_not_ask_again</item>
+        <item name="contactPickerDialogOk">@string/contact_picker_dialog_ok</item>
+        <item name="contactPickerDialogCancel">@string/contact_picker_dialog_cancel</item>
+        <item name="contactPickerMessageError">@string/contact_picker_message_error</item>
+        <item name="contactPickerMenuSelectAll">@string/contact_picker_menu_select_all</item>
+        <item name="contactPickerMenuChoose">@string/contact_picker_menu_choose</item>
+        <item name="contactPickerMenuSearch">@string/contact_picker_menu_search</item>
+        <item name="contactPickerSearchHint">@string/contact_picker_search_hint</item>
+        <item name="contactPickerNumberTypeAssistant">@string/contact_picker_number_type_assistant</item>
+        <item name="contactPickerNumberTypeCallback">@string/contact_picker_number_type_callback</item>
+        <item name="contactPickerNumberTypeCar">@string/contact_picker_number_type_car</item>
+        <item name="contactPickerNumberTypeCompanyMain">@string/contact_picker_number_type_company_main</item>
+        <item name="contactPickerNumberTypeFaxHome">@string/contact_picker_number_type_fax_home</item>
+        <item name="contactPickerNumberTypeFaxWork">@string/contact_picker_number_type_fax_work</item>
+        <item name="contactPickerNumberTypeHome">@string/contact_picker_number_type_home</item>
+        <item name="contactPickerNumberTypeIsdn">@string/contact_picker_number_type_isdn</item>
+        <item name="contactPickerNumberTypeMain">@string/contact_picker_number_type_main</item>
+        <item name="contactPickerNumberTypeMms">@string/contact_picker_number_type_mms</item>
+        <item name="contactPickerNumberTypeMobile">@string/contact_picker_number_type_mobile</item>
+        <item name="contactPickerNumberTypeOther">@string/contact_picker_number_type_other</item>
+        <item name="contactPickerNumberTypeOtherFax">@string/contact_picker_number_type_other_fax</item>
+        <item name="contactPickerNumberTypePager">@string/contact_picker_number_type_pager</item>
+        <item name="contactPickerNumberTypeRadio">@string/contact_picker_number_type_radio</item>
+        <item name="contactPickerNumberTypeTelex">@string/contact_picker_number_type_telex</item>
+        <item name="contactPickerNumberTypeTtyTdd">@string/contact_picker_number_type_tty_tdd</item>
+        <item name="contactPickerNumberTypeWork">@string/contact_picker_number_type_work</item>
+        <item name="contactPickerNumberTypeWorkMobile">@string/contact_picker_number_type_work_mobile</item>
+        <item name="contactPickerNumberTypeWorkPager">@string/contact_picker_number_type_work_pager</item>
     </style>
 
     <style name="ContactPickerTheme.ActionModeCloseButtonStyle" parent="Widget.AppCompat.ActionButton.CloseMode">
